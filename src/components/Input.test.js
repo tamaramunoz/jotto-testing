@@ -1,8 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { findByTestAttr, checkProps } from '../../test/testUtils';
-import Input from './Input';
 
+import Input from './Input';
+const mockSetCurrentGuess = jest.fn();
+
+jest.mock('react', () => ({
+    ...jest.requireActual('react'),
+    useState: (initialState) => [initialState, mockSetCurrentGuess]
+}));
 
 /**
  * Factory function to create a ShallowWrapper for the App component.
@@ -24,10 +30,12 @@ test('does not throw warning with expeted props', () => {
     checkProps(Input, { secretWord: 'party' });
 });
 
+
 describe('state contolled input field', () => {
     test('state updates with value of input box upon change', () => {
-        const mockSetCurrentGuess = jest.fn();
-        React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
+        // // this is when we do not destructuring our React.useState();
+        // const mockSetCurrentGuess = jest.fn();
+        // React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
 
         const wrapper = setup();
         const inputBox = findByTestAttr(wrapper, 'input-box');
