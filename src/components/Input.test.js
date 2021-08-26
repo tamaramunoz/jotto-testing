@@ -32,17 +32,28 @@ test('does not throw warning with expeted props', () => {
 
 
 describe('state contolled input field', () => {
+    let wrapper
+    beforeEach(() => {
+        wrapper = setup();
+    });
+
     test('state updates with value of input box upon change', () => {
         // // this is when we do not destructuring our React.useState();
         // const mockSetCurrentGuess = jest.fn();
         // React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
 
-        const wrapper = setup();
         const inputBox = findByTestAttr(wrapper, 'input-box');
 
         const mockEvent = { target: { value: 'train' } };
         inputBox.simulate("change", mockEvent);
 
         expect(mockSetCurrentGuess).toHaveBeenCalledWith('train');
+    });
+
+    test('field is cleared upon submit button click', () => {
+        const button = findByTestAttr(wrapper, 'submit-button');
+
+        button.simulate('click', { preventDefault() {} });
+        expect(mockSetCurrentGuess).toHaveBeenCalledWith('');
     });
 });
