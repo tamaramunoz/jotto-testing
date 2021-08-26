@@ -6,10 +6,10 @@ import Input from './components/Input';
 
 function App() {
   return (
-    <div className="container">
+    <div data-test="component-app" className="container">
       <h1>Jotto</h1>
       <Congrats success={false} />
-      <Input />
+      {/* <Input /> */}
       <GuessedWords guessedWords={[{ guessedWord: 'train', letterMatchCount: 3 }]} />
     </div>
   );
