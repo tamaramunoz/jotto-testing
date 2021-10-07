@@ -1,5 +1,13 @@
 import moxios from 'moxios';
-import { getSecretWord } from './';
+import { getSecretWord, correctGuess, actionTypes } from './';
+
+describe('correctGuess', () => {
+    test('returns an action with type ´CORRECT_GUESS´', () => {
+        const action = correctGuess();
+        expect(action).toStrictEqual({ type: actionTypes.CORRECT_GUESS });
+    });
+    
+});
 
 describe('getSecretWord', () => {
     beforeEach(() => {
@@ -10,7 +18,7 @@ describe('getSecretWord', () => {
         moxios.uninstall();
     });
 
-    test('secret word is returned ', () => {
+    test('secret word is returned', () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
